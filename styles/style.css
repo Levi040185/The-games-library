@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  header {
+    background-color: #222;
+    padding: 1rem;
+  }
+  .logo {
+    display: block;
+    margin: 0 auto;
+    max-width: 250px;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+  }
+  
+  nav li {
+    margin-right: 1rem;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    display: block;
+  }
+
+  nav a:hover {
+    background-color: #da712b;
+    color: #FFFFFF;
+    transition: 0.3s;
+  }
+
+
+  .actual a {
+    background-color: white;
+    color: #222;
+  }
+
+  main {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+  }
+
+  footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #666;
+    padding: 1rem;
+  }
