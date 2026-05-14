@@ -1,38 +1,85 @@
-const game1 = {name: "Fifa23", type: "Football", rating: 7, isFavourite: false}
-const game2 = {name: "AOTennis 2", type: "Tennis", rating: 2, isFavourite: true}
-const game3 = {name: "Elden Ring", type: "Fantasy", rating: 4, isFavourite: false}
-const game4 = {name: "Horizon Forbidden West", type: "Adventure", rating: 3.5, isFavourite: false}
-const game5 = {name: "Pokémon Legends: Arceus", type: "RPG", rating: 3, isFavourite: true}
-const game6 = {name: "GTAV", type: "Open World", rating: 5, isFavourite: true}
-const game7 = {name: "Gran Turismo", type: "Car", rating: 6, isFavourite: true}
+const game1 = {
+    name: "Fifa23",
+    type: "Football",
+    rating: 7,
+    isFavourite: false
+}
+const game2 = {
+    name: "AOTennis 2",
+    type: "Tennis",
+    rating: 2,
+    isFavourite: true
+}
+const game3 = {
+    name: "Elden Ring",
+    type: "Fantasy",
+    rating: 4,
+    isFavourite: false
+}
+const game4 = {
+    name: "Horizon Forbidden West",
+    type: "Adventure",
+    rating: 3.5,
+    isFavourite: false
+}
+const game5 = {
+    name: "Pokémon Legends: Arceus",
+    type: "RPG",
+    rating: 3,
+    isFavourite: true
+}
+const game6 = {
+    name: "GTAV",
+    type: "Open World",
+    rating: 5,
+    isFavourite: true
+}
+const game7 = {
+    name: "Gran Turismo",
+    type: "Car",
+    rating: 6,
+    isFavourite: true
+}
+
+const games = [game1, game2, game3, game4, game5, game6, game7];
+
+const friendGames = [{
+        name: "Minecraft",
+        type: "Open World",
+        rating: 5,
+        isFavourite: true
+    },
+    {
+        name: "Tetris",
+        type: "Puzzle",
+        rating: 5,
+        isFavourite: false
+    }
+];
+
+const allGames = [...games, ...friendGames];
 
 const toString = (game) => {
     return `Name: ${game.name} - Type: ${game.type} - Rating: ${game.rating} - Favourite: ${game.isFavourite}`;
 };
 
 const calculateAverageRating = () => {
-    return (game1.rating + game2.rating + game3.rating + game4.rating + game5.rating + game6.rating + game7.rating) / 7;
+    let total = 0;
+    for (const game of games) {
+        total += game.rating;
+    }
+    return (total / games.length).toFixed(1);
 };
 
 const getHighestRating = () => {
-    let highestGame = game1;
-    if (game2.rating > highestGame.rating) {
-        highestGame = game2;
+    if (games.length === 0) {
+        return null;
     }
-    if (game3.rating > highestGame.rating) {
-        highestGame = game3;
-    }
-    if (game4.rating > highestGame.rating) {
-        highestGame = game4;
-    }
-    if (game5.rating > highestGame.rating) {
-        highestGame = game5;
-    }
-    if (game6.rating > highestGame.rating) {
-        highestGame = game6;
-    }
-    if (game7.rating > highestGame.rating) {
-        highestGame = game7;
+    let highestGame = games[0];
+    for (const game of games) {
+        if (game.rating > highestGame.rating) {
+            highestGame = game;
+        }
     }
     return highestGame;
 };
@@ -43,30 +90,43 @@ const isFavourite = (game) => {
 
 const printFavouriteGames = () => {
     addStatus("<strong>These are all the favourite games in the library</strong>");
-
-    isFavourite(game1) ? addStatus(game1.name) : null;
-    isFavourite(game2) ? addStatus(game2.name) : null;
-    isFavourite(game3) ? addStatus(game3.name) : null;
-    isFavourite(game4) ? addStatus(game4.name) : null;
-    isFavourite(game5) ? addStatus(game5.name) : null;
-    isFavourite(game6) ? addStatus(game6.name) : null;
-    isFavourite(game7) ? addStatus(game7.name) : null;
+    games.forEach((game) => {
+        if (isFavourite(game)) {
+            addStatus(game.name);
+        }
+    });
 };
 
-const printAllGames = () => {
-    addStatus("<strong>These are all games in the library</strong>");
-    addStatus(toString(game1));
-    addStatus(toString(game2));
-    addStatus(toString(game3));
-    addStatus(toString(game4));
-    addStatus(toString(game5));
-    addStatus(toString(game6));
-    addStatus(toString(game7));
-    printFavouriteGames();
-    addStatus("<strong>Some statistics ...</strong>");
-    addStatus(`Average rating: ${calculateAverageRating()}`);
-    const highestGame = getHighestRating();
-    addStatus(`${highestGame.name} is game with the highest rating: ${highestGame.rating}`);
+const [firstGame, secondGame] = games;
+
+const printAllGames = (listOfGames) => {
+    for (const game of listOfGames) {
+        addStatus(toString(game));
+    }
+};
+
+addStatus("<strong>My own games:</strong>");
+printAllGames(games);
+
+printFavouriteGames();
+
+addStatus("<strong>Some statistics ...</strong>");
+addStatus(`Average rating: ${calculateAverageRating()}`);
+
+const highestGame = getHighestRating();
+
+if (highestGame === null) {
+    addStatus("No games found");
+} else {
+    addStatus(`${highestGame.name} is the game with the highest rating: ${highestGame.rating}`);
 }
 
-printAllGames();
+addStatus("<strong>My first 2 games are:</strong>");
+addStatus(firstGame.name);
+addStatus(secondGame.name);
+
+addStatus("<strong>My best friend's games:</strong>");
+printAllGames(friendGames);
+
+addStatus("<strong>All the games in our library:</strong>");
+printAllGames(allGames);
