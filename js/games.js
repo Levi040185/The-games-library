@@ -65,9 +65,9 @@ const toString = (game) => {
 
 const calculateAverageRating = () => {
     let total = 0;
-    for (const game of games) {
+    games.forEach((game) => {
         total += game.rating;
-    }
+    });
     return (total / games.length).toFixed(1);
 };
 
@@ -76,39 +76,42 @@ const getHighestRating = () => {
         return null;
     }
     let highestGame = games[0];
-    for (const game of games) {
+    games.forEach((game) => {
         if (game.rating > highestGame.rating) {
             highestGame = game;
         }
-    }
+    });
+
     return highestGame;
 };
 
-const isFavourite = (game) => {
-    return game.isFavourite;
-};
+const printGamesRatingAbove = (games, rating) => {
+    const gamesAboveRating = games.filter((game) => {
+        return game.rating > rating;
+    });
 
-const printFavouriteGames = () => {
-    addStatus("<strong>These are all the favourite games in the library</strong>");
-    games.forEach((game) => {
-        if (isFavourite(game)) {
-            addStatus(game.name);
-        }
+    gamesAboveRating.forEach((game) => {
+        addStatus(toString(game));
     });
 };
 
 const [firstGame, secondGame] = games;
 
 const printAllGames = (listOfGames) => {
-    for (const game of listOfGames) {
+    listOfGames
+        .map(toString)
+        .forEach(addStatus);
+};
+
+const filterAndPrintGames = (games, customFilter) => {
+    const filteredGames = games.filter(customFilter);
+    filteredGames.forEach((game) => {
         addStatus(toString(game));
-    }
+    });
 };
 
 addStatus("<strong>My own games:</strong>");
 printAllGames(games);
-
-printFavouriteGames();
 
 addStatus("<strong>Some statistics ...</strong>");
 addStatus(`Average rating: ${calculateAverageRating()}`);
@@ -130,3 +133,16 @@ printAllGames(friendGames);
 
 addStatus("<strong>All the games in our library:</strong>");
 printAllGames(allGames);
+
+addStatus("<strong>These are all games with rating above 3:</strong>");
+printGamesRatingAbove(games, 3);
+
+addStatus("<strong>These are all the favourite games in the library</strong>");
+filterAndPrintGames(games, (game) =>{
+    return game.isFavourite === true;
+});
+
+addStatus(`<strong>These games have type "Open World"</strong>`);
+filterAndPrintGames(games, (game) => {
+    return game.type === "Open World";
+});
