@@ -12,11 +12,30 @@
 <body>
 
     <header>
+        <img
+            src="images/logo.png"
+            alt="Front End Games logo"
+            class="logo"
+        />
+
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="statistics.html">Statistics</a></li>
-                <li><a href="table-overview.html">Table Overview</a></li>
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li>
+                    <a href="statistics.html">Statistics</a>
+                </li>
+                <li class="actual">
+                    <a href="table-overview.html">
+                        Table overview
+                    </a>
+                </li>
+                <li>
+                    <a href="add-game.html">
+                        Add game
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -36,6 +55,17 @@
         <input
             type="number"
             id="rating-input"
+        />
+        <br />
+        <button id="fetch-games">
+            Fetch games
+        </button>
+        <label for="name-input">
+            from backend with name containing:
+        </label>
+        <input
+            type="text"
+            id="name-input"
         />
     </main>
 

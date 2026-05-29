@@ -4,11 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My Games</title>
+  <title>Add Game</title>
   <link type="text/css" href="styles/style.css" rel="stylesheet" />
-  <script src="js/dom.js" defer></script>
-  <script src="js/games.js" defer></script>
-
 </head>
 
 <body>
@@ -19,23 +16,53 @@
         <li>
           <a href="index.html">Home</a>
         </li>
-        <li class="actual">
+        <li>
           <a href="statistics.html">Statistics</a>
         </li>
         <li>
           <a href="table-overview.html">Table overview</a>
         </li>
-        <li>
+        <li class="actual">
           <a href="add-game.html">Add game</a>
         </li>
       </ul>
     </nav>
   </header>
+
   <main>
-    <h2>The Statistics of My Games</h2>
-    <div id="status"></div>
+    <h2>Add a Game</h2>
+    <p>
+      Add a new game to the library by filling in the form below.
+    </p>
+
+    <form>
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" />
+      </div>
+
+      <div>
+        <label for="type">Type:</label>
+        <input type="text" id="type" />
+      </div>
+
+      <div>
+        <label for="rating">Rating:</label>
+        <input type="number" id="rating" />
+      </div>
+
+      <button type="submit" id="add-game-button">
+        Add this game
+      </button>
+    </form>
+
+    <div id="status">
+      <h3>Status</h3>
+    </div>
   </main>
+
   <footer>Levi Van Uytfanghe: Front-end - 2026</footer>
+  <script src="js/add-games.js" defer></script>
 </body>
 
 </html>

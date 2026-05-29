@@ -1,53 +1,41 @@
-const game1 = {
-    name: "Fifa23",
-    type: "Football",
-    rating: 7,
-    isFavourite: false
-}
-const game2 = {
-    name: "AOTennis 2",
-    type: "Tennis",
-    rating: 2,
-    isFavourite: true
-}
-const game3 = {
-    name: "Elden Ring",
-    type: "Fantasy",
-    rating: 4,
-    isFavourite: false
-}
-const game4 = {
-    name: "Horizon Forbidden West",
-    type: "Adventure",
-    rating: 3.5,
-    isFavourite: false
-}
-const game5 = {
-    name: "Pokémon Legends: Arceus",
-    type: "RPG",
-    rating: 3,
-    isFavourite: true
-}
-const game6 = {
-    name: "GTAV",
-    type: "Open World",
-    rating: 5,
-    isFavourite: true
-}
-const game7 = {
-    name: "Gran Turismo",
-    type: "Car",
-    rating: 6,
-    isFavourite: true
-}
+const games = [];
+let captionText = "All games";
 
-const games = [game1, game2, game3, game4, game5, game6, game7];
+const fetchGames = async () => {
+  games.length = 0;
+
+  const response = await fetch("http://localhost:3000/games");
+
+  const result = await response.json();
+
+  games.push(...result);
+};
+
+const searchByFetch = async (chars) => {
+  games.length = 0;
+
+  const response = await fetch(`http://localhost:3000/games?query=${encodeURIComponent(chars)}`);
+
+  const result = await response.json();
+
+  games.push(...result);
+};
+
+const fetchAndRenderGames = async (chars = "") => {
+  if (chars === "") {
+    captionText = "All games";
+    await fetchGames();
+  } else {
+    captionText = `Games with name containing "${chars}"`;
+    await searchByFetch(chars);
+  }
+
+  renderGames(games);
+};
 
 const toString = (game) => {
     return `Name: ${game.name} - Type: ${game.type} - Rating: ${game.rating} - Favourite: ${game.isFavourite}`;
 };
-
-
 
 const table = document.createElement("table");
 
@@ -73,6 +61,10 @@ thead.appendChild(tr);
 const tbody = document.createElement("tbody");
 tbody.id = "my-games-table-body";
 
+const caption = document.createElement("caption");
+caption.innerHTML = captionText;
+
+table.appendChild(caption);
 table.appendChild(thead);
 table.appendChild(tbody);
 
@@ -93,6 +85,8 @@ document.querySelector("main").appendChild(div);
 
 function renderGames(games, filterFunction = () => true) {
     const tbody = document.querySelector("#my-games-table-body");
+    const caption = document.querySelector("caption");
+    caption.innerHTML = captionText;
 
     tbody.innerHTML = "";
 
@@ -127,7 +121,7 @@ function renderGames(games, filterFunction = () => true) {
     });
 }
 
-renderGames(games);
+fetchAndRenderGames();
 
 const statusDiv = document.querySelector("#status");
 
@@ -156,18 +150,32 @@ const favouritesButton =
 const showAllButton =
     document.querySelector("#show-all");
 
+const ratingInput =
+    document.querySelector("#rating-input");
+
+const nameInput =
+    document.querySelector("#name-input");
+
+const fetchGamesButton =
+    document.querySelector("#fetch-games");
+
 favouritesButton.addEventListener("click", () => {
     renderGames(games, (game) => game.isFavourite);
 });
-showAllButton.addEventListener("click", () => {
-    renderGames(games);
-});
 
-const ratingInput =
-    document.querySelector("#rating-input");
+showAllButton.addEventListener("click", async () => {
+    nameInput.value = "";
+    ratingInput.value = "";
+
+    await fetchAndRenderGames("");
+});
 
 ratingInput.addEventListener("input", () => {
     renderGames(games, (game) =>
         game.rating > Number(ratingInput.value)
     );
+});
+
+fetchGamesButton.addEventListener("click", async () => {
+    await fetchAndRenderGames(nameInput.value.trim());
 });
