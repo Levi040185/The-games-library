@@ -1,6 +1,5 @@
 const addGame = async (event) => {
     event.preventDefault();
-    console.log("Add game clicked");
     const game = {
         name: document.querySelector("#name").value,
         type: document.querySelector("#type").value,
@@ -28,7 +27,5 @@ const addGame = async (event) => {
 
 const addGameForm = document.querySelector("form");
 
-console.log("add-games.js loaded");
-console.log("Add game button found:", addGameForm);
 
 addGameForm.addEventListener("submit", addGame);

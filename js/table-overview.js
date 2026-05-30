@@ -33,6 +33,36 @@ const fetchAndRenderGames = async (chars = "") => {
   renderGames(games);
 };
 
+const toggleFavourite = async (game) => {
+  const response = await fetch(`http://localhost:3000/games/${game.id}/favourite`, {
+    method: "POST",
+  });
+
+  const statusDiv = document.querySelector("#status");
+
+  statusDiv.innerHTML = `
+    <h3>Status</h3>
+    <p>The game with name ${game.name} is now ${game.isFavourite ? "not " : ""}my favourite.</p>
+  `;
+
+  await fetchAndRenderGames(nameInput.value.trim());
+};
+
+const deleteGame = async (game) => {
+  await fetch(`http://localhost:3000/games/${game.id}`, {
+    method: "DELETE",
+  });
+
+  const statusDiv = document.querySelector("#status");
+
+  statusDiv.innerHTML = `
+    <h3>Status</h3>
+    <p>The game with name ${game.name} is now deleted.</p>
+  `;
+
+  await fetchAndRenderGames(nameInput.value.trim());
+};
+
 const toString = (game) => {
     return `Name: ${game.name} - Type: ${game.type} - Rating: ${game.rating} - Favourite: ${game.isFavourite}`;
 };
@@ -52,9 +82,13 @@ thType.innerHTML = "Type";
 const thRating = document.createElement("th");
 thRating.innerHTML = "Rating";
 
+const thDelete = document.createElement("th");
+thDelete.innerHTML = "Delete";
+
 tr.appendChild(thName);
 tr.appendChild(thType);
 tr.appendChild(thRating);
+tr.appendChild(thDelete);
 
 thead.appendChild(tr);
 
@@ -82,6 +116,7 @@ document.querySelector("main").appendChild(div);
 
 // Flowchart voor event listener: rij maken voor elke game - event listener koppelen aan elke rij - klik op rij? - game uit de forEach nemen met de document.querySelector - innerHTML toevoegen aan statusDiv
 // Flowchart voor filterknoppen: klik op knop? - event listener uitvoeren - alles leegmaken - renderGames oproepen - filter toepassen? - forEach maakt nieuwe rijen.
+// Flowchart voor isFavourite-flag: dubbelklik op rij - post naar /games/:uuid/favourite - isFavourite toggelen - tabel opnieuw tonen.
 
 function renderGames(games, filterFunction = () => true) {
     const tbody = document.querySelector("#my-games-table-body");
@@ -104,9 +139,21 @@ function renderGames(games, filterFunction = () => true) {
         const tdRating = document.createElement("td");
         tdRating.innerHTML = game.rating;
 
+        const tdDelete = document.createElement("td");
+
+        const deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "Delete";
+
+        deleteButton.addEventListener("click", async () => {
+            await deleteGame(game);
+        });
+
+        tdDelete.appendChild(deleteButton);
+
         tr.appendChild(tdName);
         tr.appendChild(tdType);
         tr.appendChild(tdRating);
+        tr.appendChild(tdDelete);
 
         tr.addEventListener("click", () => {
             const statusDiv = document.querySelector("#status");
@@ -115,6 +162,10 @@ function renderGames(games, filterFunction = () => true) {
                 <h3>Status</h3>
                 <p>${toString(game)}</p>
             `;
+        });
+
+        tr.addEventListener("dblclick", async () => {
+            await toggleFavourite(game);
         });
 
         tbody.appendChild(tr);
