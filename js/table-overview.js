@@ -33,10 +33,21 @@ const fetchAndRenderGames = async (chars = "") => {
   renderGames(games);
 };
 
-const toggleFavourite = async (game) => {
-  const response = await fetch(`http://localhost:3000/games/${game.id}/favourite`, {
-    method: "POST",
+// toggleFavourite en deleteGame eenvoudiger maken door een andere functie met game, URL en request method als parameters: 
+const updateGame = async (game, url, requestMethod) => {
+  await fetch(url, {
+    method: requestMethod,
   });
+
+  await fetchAndRenderGames(nameInput.value.trim());
+};
+
+const toggleFavourite = async (game) => {
+  await updateGame(
+    game,
+    `http://localhost:3000/games/${game.id}/favourite`,
+    "POST"
+  );
 
   const statusDiv = document.querySelector("#status");
 
@@ -44,14 +55,14 @@ const toggleFavourite = async (game) => {
     <h3>Status</h3>
     <p>The game with name ${game.name} is now ${game.isFavourite ? "not " : ""}my favourite.</p>
   `;
-
-  await fetchAndRenderGames(nameInput.value.trim());
 };
 
 const deleteGame = async (game) => {
-  await fetch(`http://localhost:3000/games/${game.id}`, {
-    method: "DELETE",
-  });
+  await updateGame(
+    game,
+    `http://localhost:3000/games/${game.id}`,
+    "DELETE"
+  );
 
   const statusDiv = document.querySelector("#status");
 
@@ -59,8 +70,18 @@ const deleteGame = async (game) => {
     <h3>Status</h3>
     <p>The game with name ${game.name} is now deleted.</p>
   `;
+};
 
-  await fetchAndRenderGames(nameInput.value.trim());
+const hideTable = (tableId) => {
+    const table = document.querySelector(`#${tableId}`);
+
+    table.style.display = "none";
+};
+
+const unhideTable = (tableId) => {
+    const table = document.querySelector(`#${tableId}`);
+
+    table.style.display = "table";
 };
 
 const toString = (game) => {
@@ -68,6 +89,7 @@ const toString = (game) => {
 };
 
 const table = document.createElement("table");
+table.id = "games-table";
 
 const thead = document.createElement("thead");
 
@@ -121,13 +143,27 @@ document.querySelector("main").appendChild(div);
 function renderGames(games, filterFunction = () => true) {
     const tbody = document.querySelector("#my-games-table-body");
     const caption = document.querySelector("caption");
+    const table = document.querySelector("#games-table");
+    const statusDiv = document.querySelector("#status");
     caption.innerHTML = captionText;
 
     tbody.innerHTML = "";
 
-    games
-        .filter(filterFunction)
-        .forEach((game) => {
+    const filteredGames = games.filter(filterFunction);
+
+    if (filteredGames.length === 0) {
+        hideTable("games-table");
+
+        statusDiv.innerHTML = `
+            <h3>Status</h3>
+            <p>No games in library</p>
+        `;
+
+        return;
+    }
+    unhideTable("games-table");
+
+    filteredGames.forEach((game) => {
         const tr = document.createElement("tr");
 
         const tdName = document.createElement("td");
