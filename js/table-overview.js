@@ -1,77 +1,80 @@
+// Data ophalen
 const games = [];
 let captionText = "All games";
 
 const fetchGames = async () => {
-  games.length = 0;
+    games.length = 0;
 
-  const response = await fetch("http://localhost:3000/games");
+    const response = await fetch("http://localhost:3000/games");
 
-  const result = await response.json();
+    const result = await response.json();
 
-  games.push(...result);
+    games.push(...result);
 };
 
 const searchByFetch = async (chars) => {
-  games.length = 0;
+    games.length = 0;
 
-  const response = await fetch(`http://localhost:3000/games?query=${encodeURIComponent(chars)}`);
+    const response = await fetch(`http://localhost:3000/games?query=${encodeURIComponent(chars)}`);
 
-  const result = await response.json();
+    const result = await response.json();
 
-  games.push(...result);
+    games.push(...result);
 };
 
 const fetchAndRenderGames = async (chars = "") => {
-  if (chars === "") {
-    captionText = "All games";
-    await fetchGames();
-  } else {
-    captionText = `Games with name containing "${chars}"`;
-    await searchByFetch(chars);
-  }
+    if (chars === "") {
+        captionText = "All games";
+        await fetchGames();
+    } else {
+        captionText = `Games with name containing "${chars}"`;
+        await searchByFetch(chars);
+    }
 
-  renderGames(games);
+    renderGames(games);
 };
 
+// acties
 // toggleFavourite en deleteGame eenvoudiger maken door een andere functie met game, URL en request method als parameters: 
 const updateGame = async (game, url, requestMethod) => {
-  await fetch(url, {
-    method: requestMethod,
-  });
+    await fetch(url, {
+        method: requestMethod,
+    });
 
-  await fetchAndRenderGames(nameInput.value.trim());
+    await fetchAndRenderGames(nameInput.value.trim());
 };
 
 const toggleFavourite = async (game) => {
-  await updateGame(
-    game,
-    `http://localhost:3000/games/${game.id}/favourite`,
-    "POST"
-  );
+    await updateGame(
+        game,
+        `http://localhost:3000/games/${game.id}/favourite`,
+        "POST"
+    );
 
-  const statusDiv = document.querySelector("#status");
+    const statusDiv = document.querySelector("#status");
 
-  statusDiv.innerHTML = `
+    statusDiv.innerHTML = `
     <h3>Status</h3>
     <p>The game with name ${game.name} is now ${game.isFavourite ? "not " : ""}my favourite.</p>
   `;
 };
 
 const deleteGame = async (game) => {
-  await updateGame(
-    game,
-    `http://localhost:3000/games/${game.id}`,
-    "DELETE"
-  );
+    await updateGame(
+        game,
+        `http://localhost:3000/games/${game.id}`,
+        "DELETE"
+    );
 
-  const statusDiv = document.querySelector("#status");
+    const statusDiv = document.querySelector("#status");
 
-  statusDiv.innerHTML = `
+    statusDiv.innerHTML = `
     <h3>Status</h3>
     <p>The game with name ${game.name} is now deleted.</p>
   `;
 };
 
+// Hulpfuncties
 const hideTable = (tableId) => {
     const table = document.querySelector(`#${tableId}`);
 
@@ -88,6 +91,7 @@ const toString = (game) => {
     return `Name: ${game.name} - Type: ${game.type} - Rating: ${game.rating} - Favourite: ${game.isFavourite}`;
 };
 
+// Tabel aanmaken
 const table = document.createElement("table");
 table.id = "games-table";
 
@@ -140,6 +144,7 @@ document.querySelector("main").appendChild(div);
 // Flowchart voor filterknoppen: klik op knop? - event listener uitvoeren - alles leegmaken - renderGames oproepen - filter toepassen? - forEach maakt nieuwe rijen.
 // Flowchart voor isFavourite-flag: dubbelklik op rij - post naar /games/:uuid/favourite - isFavourite toggelen - tabel opnieuw tonen.
 
+// Games weergeven
 function renderGames(games, filterFunction = () => true) {
     const tbody = document.querySelector("#my-games-table-body");
     const caption = document.querySelector("caption");
@@ -193,7 +198,7 @@ function renderGames(games, filterFunction = () => true) {
 
         tr.addEventListener("click", () => {
             const statusDiv = document.querySelector("#status");
-        
+
             statusDiv.innerHTML = `
                 <h3>Status</h3>
                 <p>${toString(game)}</p>
@@ -208,8 +213,7 @@ function renderGames(games, filterFunction = () => true) {
     });
 }
 
-fetchAndRenderGames();
-
+// Event Listeners
 const statusDiv = document.querySelector("#status");
 
 statusDiv.addEventListener("mouseover", () => {
@@ -266,3 +270,6 @@ ratingInput.addEventListener("input", () => {
 fetchGamesButton.addEventListener("click", async () => {
     await fetchAndRenderGames(nameInput.value.trim());
 });
+
+// Start
+fetchAndRenderGames();

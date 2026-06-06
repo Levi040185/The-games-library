@@ -1,3 +1,4 @@
+// Data
 const game1 = {
     name: "Fifa23",
     type: "Football",
@@ -59,6 +60,7 @@ const friendGames = [{
 
 const allGames = [...games, ...friendGames];
 
+// Hulpfuncties
 const toString = (game) => {
     return `Name: ${game.name} - Type: ${game.type} - Rating: ${game.rating} - Favourite: ${game.isFavourite}`;
 };
@@ -85,6 +87,7 @@ const getHighestRating = () => {
     return highestGame;
 };
 
+// Filters
 const printGamesRatingAbove = (games, rating) => {
     const gamesAboveRating = games.filter((game) => {
         return game.rating > rating;
@@ -110,6 +113,7 @@ const filterAndPrintGames = (games, customFilter) => {
     });
 };
 
+// Output
 addStatus("<strong>My own games:</strong>");
 printAllGames(games);
 
@@ -138,7 +142,7 @@ addStatus("<strong>These are all games with rating above 3:</strong>");
 printGamesRatingAbove(games, 3);
 
 addStatus("<strong>These are all the favourite games in the library</strong>");
-filterAndPrintGames(games, (game) =>{
+filterAndPrintGames(games, (game) => {
     return game.isFavourite === true;
 });
 

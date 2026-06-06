@@ -1,3 +1,4 @@
+// Data ophalen
 const data = [];
 
 const fetchData = async () => {
@@ -14,6 +15,7 @@ const fetchData = async () => {
     });
 };
 
+// Data weergeven
 const renderData = async () => {
     const tableBody = document.querySelector("#minecraftTable");
 
@@ -59,6 +61,8 @@ const renderData = async () => {
     });
 };
 
+// Hulpfuncties
+
 const renderStartTime = () => {
     const startTime = document.querySelector("#start-time");
     startTime.innerHTML = new Date().toLocaleTimeString();
@@ -79,6 +83,7 @@ const sortNewestFirst = () => {
     return document.getElementById("time-first").checked;
 };
 
+// Start
 renderStartTime();
 renderData();
 setInterval(renderData, 5000);

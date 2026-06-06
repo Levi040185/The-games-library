@@ -1,80 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Table Overview</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Table Overview</title>
 
-    <link rel="stylesheet" href="styles/style.css">
-    <script src="js/dom.js" defer></script>
-    <script src="js/table-overview.js" defer></script>
+  <link rel="stylesheet" href="styles/style.css">
+  <script src="js/dom.js" defer></script>
+  <script src="js/table-overview.js" defer></script>
 </head>
+
 <body>
+  <header>
+    <img src="images/logo.png" alt="Front End Games logo" class="logo" />
+    <nav>
+      <ul>
+        <li>
+          <a href="index.html">Home</a>
+        </li>
+        <li>
+          <a href="statistics.html">Statistics</a>
+        </li>
+        <li class="actual">
+          <a href="table-overview.html">Table overview</a>
+        </li>
+        <li>
+          <a href="add-game.html">Add game</a>
+        </li>
+        <li>
+          <a href="minecraft.html">Minecraft</a>
+        </li>
+        <li>
+          <a href="free-to-play.html">Free to play</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
 
-    <header>
-        <img
-            src="images/logo.png"
-            alt="Front End Games logo"
-            class="logo"
-        />
+  <main>
+    <h2>My Games</h2>
+    <button id="show-favourites">
+      Show my favourite games
+    </button>
+    <button id="show-all">
+      Show all games
+    </button>
+    <label for="rating-input">
+      Show games with a rating higher than:
+    </label>
 
-        <nav>
-            <ul>
-                <li>
-                    <a href="index.html">Home</a>
-                </li>
-                <li>
-                    <a href="statistics.html">Statistics</a>
-                </li>
-                <li class="actual">
-                    <a href="table-overview.html">
-                        Table overview
-                    </a>
-                </li>
-                <li>
-                    <a href="add-game.html">
-                        Add game
-                    </a>
-                </li>
-                <li>
-                    <a href="minecraft.html">Minecraft</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
+    <input type="number" id="rating-input" />
+    <br />
+    <button id="fetch-games">
+      Fetch games
+    </button>
+    <label for="name-input">
+      from backend with name containing:
+    </label>
+    <input type="text" id="name-input" />
+  </main>
 
-    <main>
-        <h2>My Games</h2>
-        <button id="show-favourites">
-            Show my favourite games
-        </button>
-        <button id="show-all">
-            Show all games
-        </button>
-        <label for="rating-input">
-            Show games with a rating higher than:
-        </label>
-        
-        <input
-            type="number"
-            id="rating-input"
-        />
-        <br />
-        <button id="fetch-games">
-            Fetch games
-        </button>
-        <label for="name-input">
-            from backend with name containing:
-        </label>
-        <input
-            type="text"
-            id="name-input"
-        />
-    </main>
-
-    <footer>
-        <p>© Levi Van Uytfanghe</p>
-    </footer>
+  <footer>
+    <p>© Levi Van Uytfanghe</p>
+  </footer>
 
 </body>
+
 </html>

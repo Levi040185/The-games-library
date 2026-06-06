@@ -1,3 +1,4 @@
+// Status
 const addStatusError = (status) => {
     const statusDiv = document.querySelector("#status");
     statusDiv.innerHTML = `
@@ -6,6 +7,7 @@ const addStatusError = (status) => {
     `;
 };
 
+// Validatie
 const nameIsUnique = async (name) => {
     const response = await fetch(
         `http://localhost:3000/games/name/${name}`
@@ -16,6 +18,7 @@ const nameIsUnique = async (name) => {
     return result === null;
 };
 
+// Game toevoegen
 const addGame = async (event) => {
     event.preventDefault();
     const game = {
@@ -64,7 +67,7 @@ const addGame = async (event) => {
     `;
 };
 
+// Event Listener
 const addGameForm = document.querySelector("form");
-
 
 addGameForm.addEventListener("submit", addGame);

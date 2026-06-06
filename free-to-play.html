@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free to play</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="js/free-to-play.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <img src="images/logo.png" alt="Front End Games logo" class="logo" />
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li>
+                    <a href="statistics.html">Statistics</a>
+                </li>
+                <li>
+                    <a href="table-overview.html">Table overview</a>
+                </li>
+                <li>
+                    <a href="add-game.html">Add game</a>
+                </li>
+                <li>
+                    <a href="minecraft.html">Minecraft</a>
+                </li>
+                <li class="actual">
+                    <a href="free-to-play.html">Free to play</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Free to play games</h1>
+        <p> Discover free and play awesome games for free!</p>
+
+        <section class="filter-panel">
+            <div class="filter-group">
+                <label for="title-filter" class="filter-title">Search by title</label>
+                <input type="text" id="title-filter" placeholder="Type a game title..." />
+            </div>
+
+            <div class="filter-group">
+                <p class="filter-title">Platform</p>
+
+                <div class="filter-options">
+                    <label class="filter-choice" for="platform-all">
+                        <input type="radio" name="platform" id="platform-all" value="all" checked>
+                        All
+                    </label>
+
+                    <label class="filter-choice" for="platform-pc">
+                        <input type="radio" name="platform" id="platform-pc" value="PC (Windows)">
+                        PC
+                    </label>
+
+                    <label class="filter-choice" for="platform-browser">
+                        <input type="radio" name="platform" id="platform-browser" value="Web Browser">
+                        Browser
+                    </label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <p class="filter-title">Sort games</p>
+
+                <div class="filter-options">
+                    <label class="filter-choice" for="sort-none">
+                        <input type="radio" name="sort-games" id="sort-none" value="none" checked>
+                        No sorting
+                    </label>
+
+                    <label class="filter-choice" for="sort-title">
+                        <input type="radio" name="sort-games" id="sort-title" value="title">
+                        Title A-Z
+                    </label>
+
+                    <label class="filter-choice" for="sort-release-date">
+                        <input type="radio" name="sort-games" id="sort-release-date" value="release-date">
+                        Newest release first
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <div id="games-container"></div>
+
+        <button id="load-more-games">Load more games</button>
+    </main>
+
+    <footer>
+        <p>© Levi Van Uytfanghe</p>
+    </footer>
+</body>
+
+</html>

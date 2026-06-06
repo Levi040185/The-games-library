@@ -7,11 +7,19 @@ const addStatus = (status) =>
 
 const createTableRow = () => document.createElement("tr");
 
-const addTableRow = ({ tableBody, tableRow }) => {
+const addTableRow = ({
+  tableBody,
+  tableRow
+}) => {
   tableBody.appendChild(tableRow);
 };
 
-const addTableCell = ({ tableRow, value, colSpan, className }) => {
+const addTableCell = ({
+  tableRow,
+  value,
+  colSpan,
+  className
+}) => {
   const cell = document.createElement("td");
 
   cell.innerHTML = value;
@@ -27,5 +35,7 @@ const addTableCell = ({ tableRow, value, colSpan, className }) => {
   tableRow.appendChild(cell);
 };
 
-const clearTableRows = ({ tableBody }) =>
+const clearTableRows = ({
+    tableBody
+  }) =>
   (document.getElementById(tableBody).innerHTML = "");
